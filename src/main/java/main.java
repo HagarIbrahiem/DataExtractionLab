@@ -1,4 +1,7 @@
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -8,7 +11,7 @@ public class main {
         List<Pyrmaid> myList ;
         PyrmaidCSVDAOImp _PyrmaidCSVDAOImp = new PyrmaidCSVDAOImp("D:\\pyramids.csv");
         myList =  _PyrmaidCSVDAOImp.GetAllPyrmaids();
-        PrintPyramids( myList);
+        PrintPyramids( SortPyramidsbyHeight (myList));
         
     }
     
@@ -29,6 +32,15 @@ public class main {
        }  
         else
         System.out.println("EmptyList");
+    }
+    
+    public static List<Pyrmaid> SortPyramidsbyHeight (List<Pyrmaid> lst)
+    {
+        List<Pyrmaid> Pyrmaids = lst;
+        Comparator<Pyrmaid> compareByHeight = (Pyrmaid p1, Pyrmaid p2) -> p1.getHeight().compareTo( p2.getHeight() );
+        Collections.sort(Pyrmaids, compareByHeight);
+        return Pyrmaids;
+        //Collections.sort(Pyrmaids, compareById.reversed()); 
     }
     
 }
