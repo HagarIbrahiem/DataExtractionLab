@@ -64,6 +64,6 @@ public class main {
 
         for (Map.Entry<String,Set<String>> entry : pyrmaidMap.entrySet())
             System.out.println("Key = " + entry.getKey() +
-                             ", Value = " + entry.getValue());
+                             ", Value = " +entry.getValue().size());
     }
 }
