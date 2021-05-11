@@ -1,8 +1,5 @@
 
-import static java.rmi.Naming.list;
-import java.util.ArrayList;
 import java.util.Collections;
-import static java.util.Collections.list;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -18,10 +15,12 @@ public class main {
         
         //Get List
         lst =  _PyrmaidCSVDAOImp.GetAllPyrmaids();
-        // Sort List
-       //PrintPyramids( SortPyramidsbyHeight (lst));
-         //Mapping List 
-        MapList(lst);
+        
+        //Sort List
+        PrintPyramids( SortPyramidsbyHeight (lst));
+        
+        //Mapping List 
+        MapPyramidsLst(lst);
      
     }
     
@@ -54,7 +53,7 @@ public class main {
         //Collections.sort(Pyrmaids, compareById.reversed()); 
     }
     
-    public static void MapList (List<Pyrmaid> lst) {
+    public static void MapPyramidsLst (List<Pyrmaid> lst) {
         
         Map<String, Set<String>> pyrmaidMap = lst.stream()
                                       .collect(
