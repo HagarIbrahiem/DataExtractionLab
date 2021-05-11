@@ -1,10 +1,7 @@
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,25 +35,25 @@ public class PyrmaidCSVDAOImp implements PyrmaidCSVDao{
                 line= _BufferedReader.readLine();
                if(line != null)
                {
-                   String [] attributes = line.split(",");
+                   String [] attributes = line.split(",",-1);
                         Pyrmaid _Pyrmaid = new Pyrmaid ();
                         _Pyrmaid.setPharaoh(attributes[0]);
                         _Pyrmaid.setAncientName(attributes[1]);
                         _Pyrmaid.setModernName(attributes[2]);
                         _Pyrmaid.setSite(attributes[4]);
-                        //Check null hight
-                         if( attributes[7] ==null )
-                             _Pyrmaid.setHeight(Double.NaN);
+                        //validate Height value
+                         if( attributes[7].isEmpty()  )
+                             _Pyrmaid.setHeight(0.0);
                          else
                              _Pyrmaid.setHeight(Double.parseDouble(attributes[7]));
                         pyrmaids.add(_Pyrmaid);
                }
            } while (line != null);
+            _BufferedReader.close();
         } 
         catch (IOException ex) {
             System.err.println("Error" + ex.getMessage());
         }
-
        return  pyrmaids;
     }
     
