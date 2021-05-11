@@ -1,18 +1,28 @@
 
+import static java.rmi.Naming.list;
 import java.util.ArrayList;
 import java.util.Collections;
+import static java.util.Collections.list;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 public class main {
     public static void main(String[] args) {
         
-        List<Pyrmaid> myList ;
+        List<Pyrmaid> lst ;
         PyrmaidCSVDAOImp _PyrmaidCSVDAOImp = new PyrmaidCSVDAOImp("D:\\pyramids.csv");
-        myList =  _PyrmaidCSVDAOImp.GetAllPyrmaids();
-        PrintPyramids( SortPyramidsbyHeight (myList));
         
+        //Get List
+        lst =  _PyrmaidCSVDAOImp.GetAllPyrmaids();
+        // Sort List
+       //PrintPyramids( SortPyramidsbyHeight (lst));
+         //Mapping List 
+        MapList(lst);
+     
     }
     
       
@@ -37,10 +47,24 @@ public class main {
     public static List<Pyrmaid> SortPyramidsbyHeight (List<Pyrmaid> lst)
     {
         List<Pyrmaid> Pyrmaids = lst;
+        //Set Comparator using limda expression
         Comparator<Pyrmaid> compareByHeight = (Pyrmaid p1, Pyrmaid p2) -> p1.getHeight().compareTo( p2.getHeight() );
         Collections.sort(Pyrmaids, compareByHeight);
         return Pyrmaids;
         //Collections.sort(Pyrmaids, compareById.reversed()); 
     }
     
+    public static void MapList (List<Pyrmaid> lst) {
+        
+        Map<String, Set<String>> pyrmaidMap = lst.stream()
+                                      .collect(
+                                           Collectors.groupingBy(
+                                               Pyrmaid::getSite, 
+                                           Collectors.mapping(Pyrmaid::getPharaoh,Collectors.toSet())
+                                                              ));
+
+        for (Map.Entry<String,Set<String>> entry : pyrmaidMap.entrySet())
+            System.out.println("Key = " + entry.getKey() +
+                             ", Value = " + entry.getValue());
+    }
 }
